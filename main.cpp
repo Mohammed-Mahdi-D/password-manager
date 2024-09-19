@@ -5,6 +5,9 @@
 #include <ctime>
 
 
+
+
+
 std::string generateRandomPassword(int length=8)
 {
 	const std::string characters = 
@@ -66,8 +69,64 @@ std::string findLineInFile(std::string path, std::string myline)
 	return myline;
 }
 
+
+void addPassword()
+{
+}
+
+void readPassword()
+{
+}
+
+void updatePassword()
+{
+}
+
+void deletePassword()
+{
+}
+
+
+
+void baseFunction()
+{
+	std::cout << "Welcome to your password manager, what task do you want to perform:\n"
+		     "1-Add password\n"
+		     "2-Read an existing password\n"
+		     "3-Update a password\n"
+		     "4-Delete a password\n"
+		     "(1-4), or 'q' to quit: ";
+	char c;
+	std::cin >> c;
+	std::cout << c;
+	
+	switch (c)
+	{
+		case '1':
+			addPassword();
+			break;
+		case '2':
+			readPassword();
+			break;
+
+		case '3':
+			updatePassword();
+			break;
+		case '4':
+			deletePassword();
+			break;
+		case 'q':
+			return;
+			break;
+		default:
+			std::cout << "Invalid input, try again\n";
+			baseFunction();
+			break;
+	}
+}
+
 int main()
 {
-	std::cout << generateRandomPassword(16);
+	baseFunction();
 	return 0;
 }
