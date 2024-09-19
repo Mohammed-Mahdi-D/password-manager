@@ -50,7 +50,7 @@ void writeNewPassword(std::string path, std::string platform, std::string passwo
 std::string findLineInFile(std::string path, std::string myline)
 
 {
-	std::ifstream inFile("myfile.txt");
+	std::ifstream inFile(path);
 	if(inFile.is_open())
 	{
 		std::string line;
@@ -63,7 +63,6 @@ std::string findLineInFile(std::string path, std::string myline)
 			}
 		}
 		inFile.close();
-
 	}
 	else{
 		std::cerr << "file was not opened correctly" << "\n";
@@ -86,8 +85,21 @@ void addPassword()
 	return ;
 }
 
-void readPassword()
+std::string readPassword()
 {
+	std::string platform;
+
+	std::cout << "Enter the name of the platform: ";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::getline(std::cin, platform);
+
+	std::string line;
+	line = findLineInFile("test.txt", platform);
+
+	return line.substr(platform.size()+1, line.size());
+
+		
+
 }
 
 void updatePassword()
@@ -117,7 +129,7 @@ void baseFunction()
 			addPassword();
 			break;
 		case '2':
-			readPassword();
+			std::cout << readPassword();
 			break;
 
 		case '3':
