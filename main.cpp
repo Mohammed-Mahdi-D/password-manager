@@ -2,6 +2,24 @@
 #include <string>
 #include <fstream>
 
+void writeNewPassword(std::string path, std::string platform, std::string password)
+{
+	std::ofstream outFile(path, std::ios::app);
+	if(outFile.is_open())
+	{
+		outFile << platform << "|"<<password << "\n";
+		outFile.close();
+	}
+	else
+	{
+		std::cerr << "Failed to open the file" << "\n";
+	}
+
+}
+
+
+
+
 std::string findLineInFile(std::string path, std::string myline)
 
 {
@@ -27,5 +45,6 @@ std::string findLineInFile(std::string path, std::string myline)
 
 int main()
 {
+	writeNewPassword("test.txt", "githheheheub", "chakaboukbouk"); 
 	return 0;
 }
