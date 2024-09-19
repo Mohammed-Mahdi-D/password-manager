@@ -1,6 +1,29 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <random>
+#include <ctime>
+
+
+std::string generateRandomPassword(int length=8)
+{
+	const std::string characters = 
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		"abcdefghijklmnopwrstuvwxyz"
+		"0123456789"
+		"!@#$%^&*()_";
+	std::string password;
+	std::mt19937 generator(static_cast<unsigned int>(std::time(nullptr)));
+	std::uniform_int_distribution<> distribution(0, characters.size() - 1);
+	for(int i=0; i<length; i++)
+	{
+		password += characters[distribution(generator)];
+	}
+	return password;
+			
+}
+
+
 
 void writeNewPassword(std::string path, std::string platform, std::string password)
 {
@@ -45,6 +68,6 @@ std::string findLineInFile(std::string path, std::string myline)
 
 int main()
 {
-	writeNewPassword("test.txt", "githheheheub", "chakaboukbouk"); 
+	std::cout << generateRandomPassword(16);
 	return 0;
 }
