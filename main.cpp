@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <string>
 #include <fstream>
 #include <random>
 #include <ctime>
@@ -57,6 +58,7 @@ std::string findLineInFile(std::string path, std::string myline)
 		{
 			if(line.substr(0, myline.size()) == myline)
 			{
+				inFile.close();
 				return line;
 			}
 		}
@@ -66,12 +68,22 @@ std::string findLineInFile(std::string path, std::string myline)
 	else{
 		std::cerr << "file was not opened correctly" << "\n";
 	}
-	return myline;
+	return "f";
 }
 
 
 void addPassword()
 {
+	std::string platform;
+
+	std::cout << "Enter the name of the platform: ";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::getline(std::cin, platform);
+
+	std::string password = generateRandomPassword();
+	writeNewPassword("test.txt", platform, password);
+
+	return ;
 }
 
 void readPassword()
@@ -82,7 +94,7 @@ void updatePassword()
 {
 }
 
-void deletePassword()
+void deletePassword() 
 {
 }
 
@@ -98,7 +110,6 @@ void baseFunction()
 		     "(1-4), or 'q' to quit: ";
 	char c;
 	std::cin >> c;
-	std::cout << c;
 	
 	switch (c)
 	{
