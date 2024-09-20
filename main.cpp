@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <string>
+#include <vector>
 #include <fstream>
 #include <random>
 #include <ctime>
@@ -71,7 +71,7 @@ std::string findLineInFile(std::string path, std::string myline)
 }
 
 
-void addPassword()
+std::string addPassword()
 {
 	std::string platform;
 
@@ -82,7 +82,7 @@ void addPassword()
 	std::string password = generateRandomPassword();
 	writeNewPassword("test.txt", platform, password);
 
-	return ;
+	return password;
 }
 
 std::string readPassword()
@@ -102,12 +102,78 @@ std::string readPassword()
 
 }
 
-void updatePassword()
+
+void updateFile(std::string path, std::string platform, std::string newpassword)
 {
+	std::ifstream fileIn(path);
+	if(! fileIn.is_open())
+	{
+		std::cerr << "Unable to open file";
+		return;
+	}
+
+	std::vector<std::string> lines;
+	std::string line;
+
+	while(std::getline(fileIn, line))
+	{
+		if(line.substr(0, platform.size()) == platform)
+		{
+			lines.push_back(platform + "|" + newpassword);
+		}	
+		else
+		{
+		lines.push_back(line);
+		}
+	}
+	
+	fileIn.close();
+
+	std::ofstream fileOut(path);
+	if(! fileOut.is_open())
+	{
+		std::cerr << "Unable to open file";
+	}
+
+	for (const auto& updatedLine : lines)
+	{
+		fileOut << updatedLine << "\n";
+	}
+	
+	fileOut.close();
+
+	return;
+
+	
 }
 
-void deletePassword() 
+
+std::string updatePassword()
 {
+	std::string platform;
+
+	std::cout << "Enter the name of the platform: ";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::getline(std::cin, platform);
+
+	std::string line;
+	line = findLineInFile("test.txt", platform);
+
+	std::string newpassword = generateRandomPassword();
+
+	
+	updateFile("test.txt", platform, newpassword);
+
+
+	return newpassword;
+	
+
+
+}
+
+void deletePassword()
+{
+	return;
 }
 
 
@@ -126,14 +192,14 @@ void baseFunction()
 	switch (c)
 	{
 		case '1':
-			addPassword();
+			std::cout << "generated password: " << addPassword() << "\n";
 			break;
 		case '2':
-			std::cout << readPassword();
+			std::cout << readPassword() << "\n";
 			break;
 
 		case '3':
-			updatePassword();
+			std::cout << updatePassword() << "\n";
 			break;
 		case '4':
 			deletePassword();
